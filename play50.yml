@@ -1,0 +1,16 @@
+---
+- name: play to demonstrate lookup plugin
+ #we read the file content using lookup plugin
+  hosts: localhost
+  gather_facts: no
+  become: true
+  remote_user: ansible
+  vars:
+    myvar: "{{lookup('file','/etc/passwd')}}"
+  tasks:
+   - name: Task to print the file content using lookup plugin.
+      #using debug module to print the variable content
+     debug:
+       msg: "{{myvar}}"
+...
+       

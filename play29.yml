@@ -1,0 +1,16 @@
+---
+- name: Demonstrate variables
+  hosts: localhost
+  become: true
+  remote_user: ansible
+  vars_files:
+   - vars/prod_user.yml
+  tasks:
+   - name: Task to create a user
+     user:
+       name: "{{u1_name}}"
+       password: "{{u1_password|password_hash('sha512')}}"
+       comment: "{{u1_gecos}}"
+       home: "{{u1_home}}"
+       shell: "{{u1_shell}}"
+...

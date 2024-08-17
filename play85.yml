@@ -1,0 +1,26 @@
+---
+- name: Play to print multiple debug messages
+  hosts: 192.168.1.82
+  become: true
+  gather_facts: false
+  tasks:
+   - name: task1 - red planet
+     debug:
+      msg: "task1 - red planet"
+     tags: mars 
+   - name: task2 - mosaic planet
+     debug:
+      msg: "task2 - mosaic planet"
+     tags: jupiter
+   - name: task3 - blue planet
+     debug:
+      msg: "task3 - blue planet"
+     tags: earth 
+   - name: task4 - mist planet
+     debug:
+      msg: "task4 - mist planet"
+     tags: venus
+ # using tags to we call that particular task 
+ # ansible-playbook --tags=tagname play85.yml
+...
+    

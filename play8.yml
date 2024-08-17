@@ -1,0 +1,16 @@
+---
+- name: Play to create a file with some content
+# use copy module to create a file and to put some content
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: task to create a file with some content
+     copy:
+       dest: /sam/.sec.conf
+       content: " username: ansible \n password: ansible \n"
+       #put above line \n used for new line
+       mode: '0400'
+       owner: root
+       group: root
+...

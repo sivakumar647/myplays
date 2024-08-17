@@ -1,0 +1,19 @@
+---
+- name: Work with variables
+  hosts: localhost
+  become: true
+  remote_user: ansible
+  vars:
+    course: javascript
+  tasks:
+   - name: Print variable name
+     debug:
+       msg: "The Value is {{course}}" # This works because variable is not at the begining
+       #The below doesn't work
+       # msg: {{course}} is the value 
+   - name: Print variable name
+     debug:
+       msg: Value {{course}} belongs variable course # This works
+   - name: Print onces again
+     debug:
+       msg: The Value is {{course}} # This will works

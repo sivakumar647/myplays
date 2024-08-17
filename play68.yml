@@ -1,0 +1,13 @@
+---
+- name: Demonstrate with_sequence
+  hosts: localhost
+  gather_facts: no
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: Debug module to demonstrate with_sequence
+     debug:
+       msg: "{{item}}"
+     with_sequence: start=1 stride=5 count=10
+     # with_sequence: start=1 count=10
+...

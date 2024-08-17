@@ -1,0 +1,20 @@
+---
+- name: Play to demonstrate vars in tasks
+  hosts: dev
+  become: true
+  remote_user: ansible
+  vars:
+   u_name: bingo
+   upass: test123
+  tasks:
+   - name: task1
+     vars:
+      u_name: zolo01
+     user:
+       name: "{{u_name}}"
+       password: "{{ 'upass' | password_hash('sha512')}}"
+       state: present
+   - name: task2
+     debug:
+      msg: "{{u_name}} and {{upass}}"
+...

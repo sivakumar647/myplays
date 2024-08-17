@@ -1,0 +1,33 @@
+---
+- name: Play to print multiple debug messages using tags
+  hosts: 192.168.1.82
+  gather_facts: false
+  tasks:
+   - name: task1 - red planet
+     debug:
+      msg: "task1 - red planet"
+     tags:
+      - mars
+      - never
+   - name: task2 - mosaic planet
+     debug:
+      msg: "task2 - mosaic planet"
+     tags: jupiter
+   - name: task3 - blue planet
+     debug:
+      msg: "task3 - blue planet"
+     tags:
+      - earth
+      - rocky
+   - name: task4 - mist planet
+     debug:
+      msg: "task4 - mist planet"
+     tags:
+      - venus
+      - always
+      # always tag cause the task to be execute always even if you did not specify in --tags option
+      # never tag cause the task to not to process. you can invoke this by --tags=tagname explicitly
+      #you can have multiple tags for the same tasks
+      #default tag is all
+      # ansible-playbook --skip-tags=tagname play86.yml
+...

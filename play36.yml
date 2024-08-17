@@ -1,0 +1,14 @@
+---
+- name: Demonstrate variables
+  hosts: localhost
+  become: true
+  remote_user: ansible
+  vars_files:
+   - vars/prod_user.yml
+  vars:
+    u1_name: mysql
+  tasks:
+   - name: Task to display a value from a variable
+     debug:
+       msg: "{{u1_name}}"
+...

@@ -1,0 +1,18 @@
+---
+- name: Play to demonstrate iterative statement in ansible
+  hosts: localhost
+  remote_user: ansible
+  gather_facts: no
+  become: true
+  tasks:
+  - name: Task to repeat for 5 times
+    debug:
+      msg: "Hello ..... Its me .... Ansible ...{{item}}"
+       #loop: [sanjay,uday,roshan,mani,siva]
+    loop:
+     - sanjay
+     - uday
+     - mani
+     - roshan
+     - siva    
+...

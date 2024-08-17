@@ -1,0 +1,13 @@
+---
+- name: Play to demonstrate shell module
+  hosts: 192.168.1.83
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: Run a shell command
+     shell: "/usr/bin/df -h"
+     register: out
+   - name: print the output
+     debug:
+      msg: "{{out.stdout_lines}}"
+...

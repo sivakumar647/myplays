@@ -1,0 +1,21 @@
+---
+- name: Play to gather ansible facts
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: create an empty file
+     file:
+       path: "/etc/{{ansible_hostname}}.cfg"
+       state: touch
+       mode: '0644'
+       owner: root
+       group: root
+   - name: Task to write host configuration info in the above created file
+     lineinfile:
+      path: "/etc/{{ansible_hostname}}.cfg"
+      line: "The server name is {{ansible_hostname}}, 
+             the IP address is {{ansible_ens192.ipv4.address}} 
+             and the mac address is {{ansible_ens192.macaddress}} 
+             and the no of processors count is {{ansible_processor_count}}"
+...

@@ -1,0 +1,36 @@
+---
+- name: Play to read CSV file
+  hosts: 192.168.1.82
+  become: true
+  remote_user: ansible
+  vars:
+   fname: ulist.csv
+  tasks:
+   - name: Push {{fname}} to remote /tmp
+     copy:
+       src: "{{fname}}"
+       dest: "/tmp/{{fname}}"
+   - name: Read {{fname}} using read_csv module
+     read_csv:
+      path: "/tmp/{{fname}}"
+     register: out
+   - name: create group as per given in the csv
+     group:
+      name: "{{item.group}}"
+      state: present
+     loop: "{{out.list}}"
+   - name: Create users as per given in the csv
+     user:
+      name: "{{item.name}}"
+      comment: "{{item.comment}}"
+      uid: "{{item.uid}}"
+      groups: "{{item.group}}"
+      password: "{{ 'item.password' | password_hash('sha512')}}"
+      state: present
+      append: yes
+     loop: "{{out.list}}"
+   - name: remove {{fname}} from remote system
+     file:
+      path: "/tmp/{{fname}}"
+      state: absent
+...

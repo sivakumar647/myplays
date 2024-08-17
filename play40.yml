@@ -1,0 +1,11 @@
+---
+- name: Play to demonstrate ansible facts
+  hosts: all
+  become: yes
+  remote_user: ansible
+  tasks:
+   - name: Print ansible facts using debug module
+     debug:
+       msg: |
+             The user is "{{user}}"
+...

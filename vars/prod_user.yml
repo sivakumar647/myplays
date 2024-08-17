@@ -1,0 +1,5 @@
+u1_name: dbadmin
+u1_password: test123
+u1_shell: /bin/bash
+u1_home: /home/dbadmin
+u1_gecos: "dbadmin user"

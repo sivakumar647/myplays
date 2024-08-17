@@ -1,0 +1,10 @@
+---
+- name: Demonstarate module to print something on the screen
+  hosts: [localhost, 192.168.1.82]
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: print some text
+     debug:
+       msg: "Hello there... this is being printed by debug module"
+...

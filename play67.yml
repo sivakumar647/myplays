@@ -1,0 +1,14 @@
+---
+- name: Play to Install the package and start services
+  hosts: 192.168.1.82
+  become: true
+  remote_user: ansible
+  gather_facts: no
+  tasks:
+   - name: Get Variables
+     include_vars: vars/dbvars.yml
+   - name: Task to install the package
+     include: tasks/pkginst.yml
+   - name: Task to start the service
+     include: tasks/start_src.yml
+...

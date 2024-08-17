@@ -1,0 +1,45 @@
+---
+- name: Play to demonstrate if variable is defined
+  hosts: localhost
+  become: true
+  remote_user: ansible
+  vars:
+   dname: /samsung
+  tasks:
+  - name: Task to demonstrate if variable is defined
+    debug:
+      msg: Variable is defined and its value is {{game}}
+    when: game is defined
+
+  - name: Task to demonstrate if variable is not defined
+    debug:
+      msg: Variable is not defined
+    when: game is not defined
+
+  - name: Use fail module to fail the play if game is not defined
+    fail:
+      msg: Variable game is not defined. please return with -e option
+    when: game is not defined
+    ignore_errors: true
+
+  - name: check if directory {{dname}} exists with stat module
+    stat:
+      path: "{{dname}}"
+    register: out
+
+  - name: print the variable output
+    debug:
+      var: out
+  
+  - name: see if the directory exists now.
+    debug:
+      msg: "Directory {{dname}} Exists"
+    when: out.stat.exists and out.stat.isdir
+
+  - name: create the directory {{dname}} if it doesn't exists
+    file:
+     path: "{{dname}}"
+     state: directory
+     mode: '0755'
+    when: out.stat.exists == false
+...

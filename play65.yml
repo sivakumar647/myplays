@@ -1,0 +1,49 @@
+---
+#create user prodadm with secondary group prodops for all the servers in prod group
+#create user devadm with secondary group devops for all the servers in prod group
+#create user testadm with secondary group testops for all the servers in prod group
+- name: Play to create users based on the group they belongs to
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: create a group for group prod
+     group:
+      name: prodops
+      state: present
+     when: ansible_hostname in groups['prod']
+   - name: create a group for group dev
+     group:
+      name: devops
+      state: present
+     when: ansible_hostname in groups['dev']
+   - name: create a group for group test
+     group:
+      name: testops
+      state: present
+     when: ansible_hostname in groups['test']
+   - name: create a user for prod group
+     user:
+       name: prodadm
+       state: present
+       password: "{{ 'prodadm' | password_hash('sha512') }}"
+       groups: prodops
+       append: yes
+     when: ansible_hostname in groups['prod']
+   - name: create a user for dev group
+     user:
+       name: devadm
+       state: present
+       password: "{{ 'devadm' | password_hash('sha512') }}"
+       groups: devops
+       append: yes
+     when: ansible_hostname in groups['dev'] 
+   - name: create a user for test group
+     user:
+       name: testadm
+       state: present
+       password: "{{ 'testadm' | password_hash('sha512') }}"
+       groups: testops
+       append: yes
+     when: ansible_hostname in groups['test'] 
+...

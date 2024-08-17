@@ -1,0 +1,22 @@
+---
+- name: Play to demonstrate uri module
+  hosts: localhost
+  remote_user: ansible
+  become: true
+  gather_facts: yes
+  tasks:
+   - name: Task to demonstrate uri module
+     uri:
+      url: http://192.168.1.82/index.html
+      return_content: yes
+     register: out
+     ignore_errors: yes
+   - name: check if the page is working
+     debug:
+      msg: The page is working
+     when: out.status == 200
+   - name: Check if the page is not working
+     debug:
+      msg: The page is not working
+     when: out.status == 404
+...

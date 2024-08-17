@@ -1,0 +1,23 @@
+---
+- name: Example of defining variables in a playbook
+  hosts: localhost
+  become: true
+  remote_user: ansible
+  vars:
+   app_name: myapp
+   app_port: 8080
+  tasks:
+   - name: print application name
+     debug:
+       msg: "The application name is {{app_name}}"
+   - name: print application port
+     debug:
+        msg: "The application port is {{app_port}}"
+   - name: Create a configuration file
+     copy:
+      content: |
+                application:
+                 name: "{{app_name}}"
+                 port: "{{app_port}}"
+      dest: /etc/app.cfg
+...

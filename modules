@@ -1,0 +1,42 @@
+1. user
+2. file
+3. copy
+4. yum
+5. service
+6. firewalld
+7. lineinfile
+8. replace
+9. debug
+10. archive
+11. unarchive
+12. group
+13. fetch
+14. cron
+15. authorized_key
+16. command
+17. shell
+18. hostname
+vars, vars_files, vars_prompt, include_vars, -e u_name=ansible(external), register, ansible_facts, ansible_local, /etc/ansible/facts.d/
+ignore_error, lookup
+19. script
+20. reboot
+21. get_url
+22. uri 
+23. stat
+24. systemd
+loop, when, include(to include tasks), delegate_to
+25. fail
+with_sequence
+26. pause
+27. read_csv
+28. synchronize
+29. package
+30. raw
+31. find
+ignore_unreachable, notify, handlers, changed_when, 
+32. meta
+flush_handlers, tags, block,rescue,always
+33. mount
+34. lvg
+35. lvol
+36. filesystem

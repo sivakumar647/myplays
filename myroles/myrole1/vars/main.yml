@@ -1,0 +1,6 @@
+---
+# vars file for myrole1
+pkg_name: httpd
+src_name: httpd
+pport: 98
+web_mesg: "Hii there this is psk "

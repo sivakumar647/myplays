@@ -1,0 +1,15 @@
+---
+- name: my ansi program
+  hosts: localhost
+  gather_facts: no
+  remote_user: ansible
+  become: yes
+  vars_prompt:
+   - prompt: enter u name
+     name: u_name
+     private: yes
+  tasks:
+  - name: my debug to print prompt values
+    debug:
+     msg: "My prompt value is {{u_name}}"
+...

@@ -1,0 +1,28 @@
+---
+- name: Demonstrate a play where a task is forced to change status
+  hosts: 192.168.1.82
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  tasks:
+   - name: task1 to print message
+     debug:
+      msg: this is a message in task1
+     changed_when: true
+     notify: handle
+    # Handler is processed with notify statement when change occurs in the tasks
+    #If no change occurs, handlers will ignored ie handler will not be notified
+   - name: task2 to print message
+     debug:
+      msg: this is a message in task2
+     changed_when: true
+     notify: handle
+  #This is second time we are notifying the same handler
+  # however, though you notify handler manytimes, it runs only once
+  #Handlers are invoked at the end of all tasks processed
+  #they are processed in the same order they apper in the handlers section and not in the order they are notified.
+  handlers:
+   - name: handle
+     debug:
+       msg: In handler named handle
+...

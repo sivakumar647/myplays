@@ -1,0 +1,21 @@
+---
+- name: Play to demonstrate handler
+  hosts: 192.168.1.82
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  vars:
+    pkg_name: nfs-utils
+    src_name: nfs-server
+  tasks:
+   - name: "install {{pkg_name}} in {{ansible_hostname}}"
+     yum:
+      name: "{{pkg_name}}"
+      state: latest
+     notify: start_nfs
+  handlers:
+   - name: start_nfs
+     service:
+       name: "{{src_name}}"
+       state: started
+...

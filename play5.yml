@@ -1,0 +1,22 @@
+---
+- name: Install multiple packages
+#you can define the list of items as below 
+#hosts: [ 192.168.1.82, 192.168.1.83, 192.168.1.31]
+#below is one more method to define list items
+  hosts: 
+   - 192.168.1.82
+   - 192.168.1.83
+  remote_user: ansible
+  gather_facts: no
+  become: true
+  tasks:
+   - name: Task to install multiple packages
+     yum:
+      name:
+       - mysql
+       - httpd
+       - nfs-utils
+      state: latest
+      #state: installed
+      #state: removed
+...

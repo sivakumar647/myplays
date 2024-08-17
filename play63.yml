@@ -1,0 +1,27 @@
+---
+- name: Play to demonstrate if variable is defined
+  hosts: localhost
+  become: true
+  remote_user: ansible
+  vars:
+   dname: /samsung
+  tasks:
+  - name: check if directory {{dname}} exists with stat module
+    stat:
+      path: "{{dname}}"
+    register: out
+
+  - name: Get the contents if directory exists and is not empty.
+    shell: ls "{{dname}}"
+    when: out.stat.exists and out.stat.isdir
+    register: out1
+  - name: Print  Directory contents if directory exists and is not empty.
+    debug:
+      msg: "{{out1.stdout_lines}}"
+    when: out.stat.exists and out.stat.isdir and out1.stdout != ""
+  - name: If dir is empty print the message
+    debug:
+      msg: "{{dname}} Directory is Empty"
+    when: out.stat.exists and out.stat.isdir and out1.stdout == ""
+    # when: out.stat.isdir is not defined
+...

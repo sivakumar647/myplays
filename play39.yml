@@ -1,0 +1,13 @@
+---
+- name: Play to demonstrate ansible facts
+  hosts: localhost
+  become: yes
+  remote_user: ansible
+  tasks:
+  - name: Print ansible facts using debug module
+    debug:
+     msg: |
+          The kernel is "{{ansible_facts['kernel']}}"
+          and hostname is "{{ansible_facts['hostname']}}"
+          and custom fact is '{{ansible_local['myfacts']['sap']['myapp']}}'
+...  

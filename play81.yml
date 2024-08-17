@@ -1,0 +1,44 @@
+---
+- name: Play to demonstrate handlers while installing package, start service, enable firewall
+  hosts: 192.168.1.82
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  tasks:
+   - name: Task to install package
+     yum:
+       name: "{{package}}" # read this value from command line with -e option
+       state: latest
+     notify:
+       - startftpserver
+       - startfw
+       - addservice
+       - restartfw
+      #Notify handlers only happen if the module results to change
+      #If change didn't happen i.e change=false, then  handlers are not allowed
+   - name: print the failure message if the package variable is not defined
+     fail:
+      msg: "You have not defined package variable. Use -e option package=pkgname while calling this playbook"
+     when: package is not defined
+  handlers:
+   - name: startftpserver
+     service: 
+      name: vsftpd
+      state: started
+   - name: startfw
+     service:
+      name: firewalld
+      state: started
+   - name: addservice
+     firewalld:
+      service: ftp
+      state: enabled
+      immediate: yes
+      permanent: yes
+   - name: restartfw
+     service: 
+      name: firewalld
+      state: restarted
+...
+#End play
+     

@@ -1,0 +1,21 @@
+---
+ - name: create an empty directory and create an empty file in that directory
+   hosts: all
+   become: true
+   remote_user: ansible
+   tasks:
+    - name: task to create an empty directory
+      file:
+        path: /sam
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+    - name: create an empty file
+      file:
+        path: /sam/file1.txt
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+...

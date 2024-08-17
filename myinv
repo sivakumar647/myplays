@@ -1,0 +1,8 @@
+192.168.1.82
+192.168.1.83
+[prod]
+siva_managed_node
+[dev]
+mani
+[test]
+sanjay
