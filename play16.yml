@@ -1,0 +1,15 @@
+---
+- name: Play to demonstrate user expire
+  hosts: 192.168.1.82
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: task to expire the user
+     user:
+       name: uday
+       expires: 1722623400
+      # Epcoh time calculated for 1st August 2024 command is date --date="08/01/2024" +%s
+       # provide the data in epoch days for expires attribute
+       state: present
+       #If user is not there it will create an user
+...

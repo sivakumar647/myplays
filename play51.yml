@@ -1,0 +1,14 @@
+---
+- name: Playbook to download file from the given URL
+  hosts: localhost
+  gather_facts: no
+  become: true
+  remote_user: ansible
+  vars:
+    url: http://192.168.2.45:91/BaseOS/Packages/ModemManager-1.10.8-2.el8.x86_64.rpm
+  tasks:
+    - name: Download the file from the given URL
+      get_url:
+       url: "{{url}}"
+       dest: /home/ansible
+...

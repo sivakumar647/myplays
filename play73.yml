@@ -1,0 +1,31 @@
+---
+- name: Play to demonstrate rsync
+  hosts: all
+  become: true
+  remote_user: ansible
+  vars:
+   source_dir: /home/ansible/day2
+   destin_dir: /trainer_plays
+  tasks:
+   - name: create {{destin_dir}} if it doesn't exists
+     file: 
+       path: "{{destin_dir}}"
+       state: directory
+   - name: install rsync if it doesn't install in control node
+     yum:
+      name: rsync
+      state: latest
+     delegate_to: localhost
+   - name: install rsync if it doesn't install in managed node
+     yum:
+      name: rsync
+      state: latest
+   - name: Synchronize {{source_dir}} and {{destin_dir}} using synchronize module
+     synchronize:
+      src: "{{source_dir}}"
+      dest: "{{destin_dir}}"
+      compress: yes
+      archive: yes
+      recursive: yes
+      #mode: pull (To get files from the remote server )
+...

@@ -1,0 +1,14 @@
+---
+ - name: Play to modify /etc/hosts 
+   hosts: all
+   become: yes
+   remote_user: ansible
+   gather_facts: no
+   tasks:
+    - name: Task to edit hosts file using lineinfile module
+      lineinfile:
+       path: /etc/hosts
+       line: "192.168.1.25 vcenter.alclabs.in
+             \n192.168.1.1 gateway.alclabs.in"
+             #Append the line at the end of the file. this is the default behaviour of lineinfile module
+...

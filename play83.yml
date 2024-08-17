@@ -1,0 +1,25 @@
+---
+- name: Demonstrate a play to check the handlers order
+  hosts: 192.168.1.82
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  tasks:
+   - name: task1 to print message
+     debug:
+      msg: this is a message in task1
+     changed_when: true
+     notify: handle1
+   - name: task2 to print message
+     debug:
+      msg: this is a message in task2
+     changed_when: true
+     notify: handle2
+  handlers:
+   - name: handle2
+     debug:
+       msg: In handler named handle2
+   - name: handle1
+     debug:
+       msg: In handler named handle1
+...

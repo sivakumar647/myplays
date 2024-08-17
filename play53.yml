@@ -1,0 +1,16 @@
+---
+- name: Demonstrate stat module
+  hosts: localhost
+  vars:
+   fname: /etc/passwd #/sbin, /usr/bin/passwd
+  remote_user: ansible
+  become: true
+  tasks:
+  - name: Use stat module to get statistics
+    stat:
+      path: "{{fname}}"
+    register: out
+  - name: Print the register variable output
+    debug:
+      var: out
+...

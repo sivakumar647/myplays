@@ -1,0 +1,32 @@
+---
+- name: Demonstrate a play where as a task is forced to change status and use meta to flush_handlers
+  hosts: 192.168.1.82
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  tasks:
+   - name: task1 to print message
+     debug:
+      msg: this is a message in task1
+     changed_when: true
+     notify: handle
+   - name: demonstrate flush handler
+     meta: flush_handlers
+  # meta tasks are a special kind of task which can influence ansible internal execution or state
+  # meta task can be used anywhere within your playbook
+  # flush_handlers make ansible run any handler tasks which have thus far been notified
+   - name: task2 to print message
+     debug:
+      msg: this is a message in task2
+     changed_when: true
+     notify: handle
+   - name: task3 to print message
+     debug:
+      msg: this is a message in task3
+     changed_when: true
+     notify: handle
+  handlers:
+   - name: handle
+     debug:
+       msg: In handler named handle
+...

@@ -1,0 +1,16 @@
+---
+- name: Play to demonstrate raw module
+  hosts: 192.168.1.82
+  become: true
+  remote_user: ansible
+  gather_facts: no
+  tasks:
+  - name: Demonstrate raw module
+  # Raw module is used when there is no python available in managed node
+    raw: /usr/bin/vmstat 2 2
+    register: out
+  - name: print the output
+    debug:
+      #var: out
+      msg: "{{out.stdout_lines}}"
+... 

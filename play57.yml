@@ -1,0 +1,23 @@
+---
+- name: Play to demonstrate iterative statement in ansible
+  hosts: localhost
+  remote_user: ansible
+  gather_facts: no
+  become: true
+  vars:
+   users:
+    - name: chris
+      gecos: "Security Team"
+    - name: donald
+      gecos: "Development Team"
+    - name: james
+      gecos: "James from Admin Team"
+   upass: test123
+  tasks:
+  - name: Task to create a user
+    user: 
+     name: "{{item.name}}"
+     comment: "{{item.gecos}}"
+     password: "{{upass|password_hash('sha512')}}"
+    loop: "{{users}}"
+...

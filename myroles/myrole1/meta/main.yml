@@ -1,0 +1,7 @@
+dependencies: []
+galaxy_info:
+  author: sivakumar
+  description: This is http server configured using ansible roles
+  company: tcs
+  license: myown
+  min_ansible_version: 2.9

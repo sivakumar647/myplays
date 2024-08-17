@@ -1,0 +1,30 @@
+---
+- name: Task to demonstrate variables
+  hosts: all
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  vars:
+   user1:
+    name: sivakumar
+    gecos: "This sivakumar"
+    home: /home/sivakumar
+    shell: /bin/bash
+   user2:
+    name: sivamani
+    gecos: "This sivamani"
+    home: /home/sivamani
+    shell: /bin/bash  
+  tasks:
+   - name: Task to print variable values
+     debug:
+       msg: |
+             The user1 name is "{{user1.name}}"
+             The user1 gecos is "{{user1.gecos}}"
+             The user1 home dir is "{{user1.home}}"
+             The user1 shell is "{{user1.shell}}"
+             The user2 name is "{{user2.name}}"
+             The user2 gecos is "{{user2.gecos}}"
+             The user2 home dir is "{{user2.home}}"
+             The user2 shell is "{{user2.shell}}"
+...

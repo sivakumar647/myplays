@@ -1,0 +1,18 @@
+---
+- name: Task to demonstrate variable in debug module
+  hosts: all
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  vars:
+    eye_color: blue
+  tasks:
+   - name: task to debug a variable
+     debug:
+       var: eye_color
+ #Run this play with -e option
+ #Example ansible-playbook -e eye_color=red Playname.yml
+ #where -e : external variable. This will have higher precedence
+ #compared local variables defined in the play
+ # First preference is command line, second preference is global then finally local variables
+...

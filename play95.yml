@@ -1,0 +1,56 @@
+---
+- name:  Play to demonstrate handler
+  hosts: 192.168.1.82
+  become: true
+  remote_user: ansible
+  vars: 
+   pkg_name: httpd
+   src_name: httpd
+   pport: 99
+   web_mesg: "Hello from Ansi Bro !!"
+  tasks:
+  - name: "Install {{pkg_name}} in {{ansible_hostname}}"
+    yum: 
+     name: "{{pkg_name}}"
+     state: latest
+    notify: web_start
+  - name: Copy the configuration file
+    copy:
+     src: /home/ansible/day2/myweb.conf
+     dest: /etc/httpd/conf.d/myweb.conf
+    notify: web_restart
+  - name: Create a directory for documents
+    file:
+     path: /myweb
+     state: directory
+  - name: create index.html file
+    template:
+     src: templates/index.j2
+     dest: /myweb/index.html
+     #owner: root
+     #group: root
+     #mode: '0644'
+  - name: create serverinfo.html file
+    template:
+     src: templates/serverinfo.j2
+     dest: /myweb/serverinfo.html
+     #owner: root
+     #group: root
+     #mode: '0644'
+
+  - name: "Add {{pport}} to firewall"
+    firewalld:
+     port: "{{pport}}/tcp"
+     permanent: yes
+     immediate: yes
+     state: enabled
+  handlers:
+  - name: web_start
+    service:
+     name: "{{src_name}}"
+     state: started
+  - name: web_restart
+    service:
+     name: "{{src_name}}"
+     state: restarted
+...

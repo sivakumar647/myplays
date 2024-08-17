@@ -1,0 +1,14 @@
+---
+- name: Demonstrate systemd module; this is similar to service module
+  hosts: localhost
+  vars:
+   fname: httpd
+  remote_user: ansible
+  gather_facts: no
+  become: true
+  tasks:
+  - name: start the service using systemd module
+    systemd:
+      name: "{{fname}}"
+      state: started
+...

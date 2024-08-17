@@ -1,0 +1,18 @@
+---
+- name: Play to demonstrate shell module
+  hosts: 192.168.1.82
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: Task to create a directory
+     file:
+        name: /tmp/siva
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: '0755'
+   - name: copy a file
+     shell: cp /var/log/messages /tmp/siva
+   - name: task to compress a given file
+     shell: gzip /tmp/siva/messages
+...

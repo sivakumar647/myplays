@@ -1,0 +1,5 @@
+u1_name: mysql
+u1_password: test@123
+u1_shell: /bin/bash
+u1_home: /home/mysql
+u1_gecos: "mysql user"

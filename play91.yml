@@ -1,0 +1,52 @@
+---
+- name: Play to provision vmware VM
+  hosts: localhost
+  gather_facts: no
+  become: true
+  tasks:
+   - name: create vmware guest
+     vmware_guest:
+      hostname: 192.168.1.25
+      username: april2024@alclabs.in
+      password: April@2024
+      validate_certs: false
+      esxi_hostname: 192.168.1.11
+      name: Testmyansible24
+      template: Template2023
+      datacenter: blr01
+      folder : ansible
+      annotation: "RHEL 8.3 VM Deployed by ansible"
+      state: poweredon
+      disk:
+      - size_gb: 16
+        type: thick
+        datastore: Esxi01DataStore
+      - size_gb: 20
+        type: thick
+        datastore: Esxi01DataStore
+      - size_gb: 20
+        type: thick
+        datastore: Esxi01DataStore
+      - size_gb: 20
+        type: thick
+        datastore: Esxi01DataStore
+      hardware:
+       memory_mb: 2048
+       memory_reservation: 1024
+       num_cpus: 2
+       num_cpu_cores_per_socket: 2
+       scsi: paravirtual
+       hotadd_cpu: true
+    #  networks:
+    #  - name: "VM Network"
+    #    device: vmxnet3
+    #    type: static
+    #    ip: 192.168.2.88
+    #    netmask: 255.255.0.0
+    #    gateway: 192.168.1.20
+    #    dns_servers: 192.168.1.12
+    #    wake_on_lan: true
+    #    start_connected: true
+    #    allow_guest_control: true
+#      wait_for_ip_address: yes
+...

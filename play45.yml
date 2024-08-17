@@ -1,0 +1,39 @@
+---
+- name: Play to create a website with service info
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: Install http web server
+     yum:
+       name:
+         - httpd
+         - firewalld
+   - name: Task to add a line in /var/www/html/index.html
+     lineinfile:
+      line: "<html>
+             <h1>
+             The server name is {{ansible_hostname}}, <br>
+             the IP address is {{ansible_ens192.ipv4.address}} and <br>
+             the mac address is {{ansible_ens192.macaddress}} and <br>
+             the no of processors count is {{ansible_processor_count}} </h1> </html>"
+      dest: /var/www/html/index.html #file name in which the line is kept
+      create: yes #create the file if it doesn't exists
+   - name: task to start firewalld service - firewalld
+     service:
+      name: firewalld
+      state: started
+      enabled: true
+   - name: task to add port to firewalld
+     firewalld:
+       service: http
+       state: enabled
+       permanent: true
+       immediate: yes
+   - name: task to start web service - httpd
+     service:
+       name: httpd
+       state: started
+       enabled: true
+   
+...

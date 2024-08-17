@@ -1,0 +1,21 @@
+---
+- name: Task to demonstrate variables
+  hosts: all
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  vars:
+   user:
+     trainer:
+      first_name: sivakumar
+      last_name: polina
+     student:
+      first_name: sivamani
+      last_name: pavala
+  tasks:
+  - name: print variable values
+    debug:
+      msg: |
+            "{{user.trainer.first_name}}" and "{{user.trainer.last_name}}"
+            "{{user.student.first_name}}" and "{{user.student.last_name}}"
+...

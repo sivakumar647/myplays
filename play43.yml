@@ -1,0 +1,15 @@
+---
+- name: Play to download /var/log/messages to control node using fetch module
+  hosts: all
+  remote_user: ansible
+  become: true
+  vars:
+    fname: /var/log/messages
+  tasks:
+   - name: copy remote {{fname}} file to local /tmp directory
+     fetch:
+       src: "{{fname}}"
+       dest: "/tmp/messages_{{ansible_hostname}}"
+       flat: yes # download only filename and without including directory structure
+...
+#End of the play

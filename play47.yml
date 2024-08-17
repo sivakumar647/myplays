@@ -1,0 +1,20 @@
+---
+- name: Demonstrate script module
+  hosts: 192.168.1.82
+  become: true
+  remote_user: ansible
+  vars:
+    script_name: get_pstat.sh
+    local_dir: /home/ansible/day2
+    output_file: /opt/proc_stat.out
+    local_out_dir: /tmp
+  tasks:
+     script: "{{local_dir}}/{{script_name}}"
+     #script will be automatically copied and executed in the remote server
+     #once the execution is completed, the script will removed from the remote server
+   - name: pull the generated output file to control node
+     fetch:
+       src: "{{output_file}}"
+       dest: "{{local_out_dir}}/proc_stat_{{ansible_hostname}}"
+       flat: yes
+...

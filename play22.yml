@@ -1,0 +1,12 @@
+---
+- name: Demonstrate to create a hard link
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: create a hard link file
+     file:
+       src: /etc/passwd
+       dest: /etc/mypass # Create hard link file to the given above source
+       state: hard
+...

@@ -1,0 +1,25 @@
+---
+- name: Play to mount dvd
+  hosts: 192.168.1.82
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: mount dvd using mount module
+     mount:
+       src: /dev/sr0
+       path: /mntS
+       opts: ro # option read only as it is dvd
+       fstype: iso9660 #iso image fstype is iso9660
+       state: mounted
+       #state: mounted ----> will add entry in /etc/fstab and then mounted
+       #state: absent ----> will unmount and remove the entry from /etc/fstab
+       #state: unmounted ---> will only unmount the fs, but not remove entry from /etc/fstab
+       # state: present --->only specifies that the device is to be configured in 'fstab' and does not trigger or require a mount
+   - name: task to verify the mounts
+     command:
+      cmd: df -h
+     register: out
+   - name: print the mounted filesystems
+     debug:
+       msg: "{{ out.stdout_lines }}"
+...

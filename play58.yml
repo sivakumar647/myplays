@@ -1,0 +1,15 @@
+---
+- name: Play to demonstrate conditional statement - when
+  hosts: localhost
+  remote_user: ansible
+  gather_facts: no
+  become: true
+  vars: 
+   res: true
+  tasks:
+   - name: Debug task to print something when condition is true
+     debug:
+      msg: "I am here"
+     when: res
+     # conditional statement should not include "{{}}". use variable name directly
+... 

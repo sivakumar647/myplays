@@ -1,0 +1,15 @@
+---
+- name: Play to create a directory
+  hosts: all
+  become: yes
+  remote_user: ansible
+  gather_facts: no
+  tasks: 
+   - name: create a directory in the remote server
+     ansible.builtin.file:
+      path: /home/ansible/controlnode
+      state: directory
+      owner: ansible
+      group: ansible
+      mode: '0775'
+...

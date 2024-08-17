@@ -1,0 +1,9 @@
+---
+- name: Play to demonstrate command module
+  hosts: all
+  become: true
+  remote_user: ansible
+  tasks:
+   - name: task to compress a given file
+     command: gzip /var/log/messages
+...

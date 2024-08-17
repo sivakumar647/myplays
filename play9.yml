@@ -1,0 +1,20 @@
+---
+#Play to deny direct root login using ssh
+ - name: Play to replace permitrootlogin in /etc/ssh/sshd_config file
+   hosts: all
+   remote_user: ansible
+   gather_facts: no
+   become: yes
+   tasks:
+    - name: Replace PermitRootLogin
+      lineinfile:
+       path: /etc/ssh/sshd_config
+       regexp: ^PermitRootLogin #Regular expression to search for this text, beginining line; thats why cap symbol
+       line: "PermitRootLogin no" # Replace line with this
+       backup: yes #take file backup before doing changes
+    - name: Restart the ssh service after the config file change
+      service:
+        name: sshd
+        state: restarted
+...
+#End of the play
